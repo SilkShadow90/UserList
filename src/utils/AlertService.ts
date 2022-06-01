@@ -25,6 +25,22 @@ export class AlertService {
     }
   }
 
+  private static getContinueButton(id: number): AlertButton {
+    return {
+      text: 'Продолжить',
+      onPress: () => {
+        if (AlertService.alertMap.has(id)) {
+          AlertService.alertMap.delete(id);
+
+          setTimeout(async () => {
+            await AlertService.showNext();
+          }, 200);
+        }
+      },
+      style: 'cancel',
+    };
+  }
+
   public static get isEmptyStack(): boolean {
     return !AlertService.alertMap.size;
   }
@@ -35,22 +51,7 @@ export class AlertService {
     const id = AlertService.nextID;
     AlertService.alertMap.set(id, {
       ...params,
-      buttons: [
-        ...(params?.buttons || []),
-        {
-          text: 'Продолжить',
-          onPress: () => {
-            if (AlertService.alertMap.has(id)) {
-              AlertService.alertMap.delete(id);
-
-              setTimeout(async () => {
-                await AlertService.showNext();
-              }, 200);
-            }
-          },
-          style: 'cancel',
-        },
-      ],
+      buttons: [...(params?.buttons || []), AlertService.getContinueButton(id)],
     });
 
     if (isEmpty) {
