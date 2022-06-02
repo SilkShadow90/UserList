@@ -4,6 +4,6 @@ export enum NavigationScreens {
 }
 
 export type RootStackParamList = {
-  [NavigationScreens.Home]: any;
-  [NavigationScreens.Details]: any;
+  [NavigationScreens.Home]: undefined;
+  [NavigationScreens.Details]: undefined;
 };
