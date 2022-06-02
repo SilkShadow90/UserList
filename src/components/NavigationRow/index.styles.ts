@@ -27,6 +27,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  text: {
+    fontSize: 20,
+    color: '#333333',
+  },
   rightItem: {
     width: 30,
     alignItems: 'center',

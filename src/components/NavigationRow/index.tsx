@@ -33,7 +33,7 @@ export const NavigationRow = ({ text, navigateScreen, isLoading, onPress, isSucc
   return (
     <TouchableOpacity style={styles.item} onPress={toDetails}>
       <View style={styles.textItem}>
-        <Text>{text}</Text>
+        <Text style={styles.text}>{text}</Text>
         <View style={styles.rightItem}>
           {isLoading ? (
             <ActivityIndicator color={'c3c3c3'} />

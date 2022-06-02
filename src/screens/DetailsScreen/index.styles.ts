@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   },
   textWrapper: {
     flexDirection: 'row',
-    backgroundColor: '#b2b2b24c',
+    backgroundColor: '#b2b2b222',
     marginVertical: 8,
     paddingHorizontal: 16,
     paddingVertical: 8,
@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
   avatarWrapper: {
     margin: 24,
     borderWidth: 4,
-    borderColor: '#b2b2b24c',
-    backgroundColor: '#b2b2b24c',
+    borderColor: '#b2b2b222',
+    backgroundColor: '#b2b2b222',
     shadowColor: '#8b8b8b',
     shadowOffset: {
       width: 0,
