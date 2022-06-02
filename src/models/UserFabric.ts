@@ -20,7 +20,7 @@ export class UserFabric extends BasicFabric<IUser> {
     return UserFabric.instance.generate(data);
   }
 
-  public static check(data: unknown): boolean {
+  public static check(data: unknown): data is User | User[] {
     if (!UserFabric.instance) {
       UserFabric.instance = new UserFabric();
     }

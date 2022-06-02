@@ -5,16 +5,18 @@ import { Button } from '../Button';
 import { styles } from './index.styles';
 
 type Props = {
-  retry(): void;
+  retry?(): void;
 };
 
 export const ErrorWrapper = ({ retry }: Props) => {
   return (
     <View style={styles.error}>
       <Text style={styles.errorText}>{Strings.errors.someError}</Text>
-      <View style={styles.buttonWrapper}>
-        <Button title={Strings.global.retry} opPress={retry} />
-      </View>
+      {!!retry && (
+        <View style={styles.buttonWrapper}>
+          <Button title={Strings.global.retry} opPress={retry} />
+        </View>
+      )}
     </View>
   );
 };

@@ -15,4 +15,9 @@ export const Strings = {
     continue: 'Продолжить',
     retry: 'Попробовать снова',
   },
+  user: {
+    name: 'Имя',
+    lastName: 'Фамилия',
+    email: 'e-mail',
+  },
 } as const;
