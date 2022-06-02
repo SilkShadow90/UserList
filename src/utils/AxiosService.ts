@@ -33,6 +33,18 @@ export class AxiosService {
       baseURL: Config.baseURL,
     });
 
+    AxiosService._instance.interceptors.response.use(
+      response => {
+        return response;
+      },
+      function (error) {
+        if (AxiosService.notFound(error.response.status)) {
+          throw new Error(Strings.errors.notFound);
+        }
+        return Promise.reject(error.response);
+      },
+    );
+
     return this.instance;
   }
 
@@ -60,6 +72,10 @@ export class AxiosService {
 
   public static isSuccess(status: number): boolean {
     return status === 200;
+  }
+
+  public static notFound(status: number): boolean {
+    return status === 404;
   }
 
   private static async showError(text?: string): Promise<void> {

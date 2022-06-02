@@ -10,6 +10,7 @@ export const Strings = {
   errors: {
     someError: 'Что-то пошло не так!!!',
     validateError: 'Данные не прошли валидацию!',
+    notFound: 'Данные не найдены!',
   },
   global: {
     continue: 'Продолжить',

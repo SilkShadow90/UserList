@@ -17,12 +17,7 @@ type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
 
 const HomeScreen = ({}: Props) => {
   const { users, isLoading, isError } = useAppSelector(state => state.usersState || {});
-  const {
-    user: userData,
-    isLoading: isUserLoading,
-    isError: isUserError,
-    id: userId,
-  } = useAppSelector(state => state.userState || {});
+  const { user: userData, isLoading: isUserLoading, id: userId } = useAppSelector(state => state.userState || {});
   const dispatch = useAppDispatch();
 
   const startUploadUsers = useCallback(() => {
@@ -44,7 +39,7 @@ const HomeScreen = ({}: Props) => {
     [dispatch],
   );
 
-  if (isError || isUserError) {
+  if (isError) {
     return <ErrorWrapper retry={startUploadUsers} />;
   }
 
