@@ -14,6 +14,7 @@ export const Strings = {
   global: {
     continue: 'Продолжить',
     retry: 'Попробовать снова',
+    noData: 'Нет данных',
   },
   user: {
     name: 'Имя',

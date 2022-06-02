@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchUsers } from '../../redux/actionCreators/users';
 import { ErrorWrapper } from '../../components/ErrorWrapper';
 import { fetchUser } from '../../redux/actionCreators/user';
+import { EmptyWrapper } from '../../components/EmptyWrapper';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
 
@@ -48,8 +49,9 @@ const HomeScreen = ({}: Props) => {
   }
 
   return (
-    <View style={{ flex: 1 }} pointerEvents={isUserLoading ? 'none' : 'auto'}>
+    <View style={styles.flex} pointerEvents={isUserLoading ? 'none' : 'auto'}>
       <FlatList
+        ListEmptyComponent={<EmptyWrapper />}
         refreshControl={<RefreshControl refreshing={!!users?.length && !!isLoading} onRefresh={onRefresh} />}
         style={styles.wrapper}
         contentContainerStyle={styles.intent}
