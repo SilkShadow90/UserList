@@ -1,17 +1,17 @@
 export interface IUser {
   id: number;
-  email: string;
   first_name: string;
   last_name: string;
-  avatar: string;
+  email?: string;
+  avatar?: string;
 }
 
 export class User implements IUser {
   id: number;
-  email: string;
   first_name: string;
   last_name: string;
-  avatar: string;
+  email?: string;
+  avatar?: string;
 
   public constructor(model: IUser) {
     this.id = model.id;

@@ -18,7 +18,7 @@ export function usersReducer(
 ): AppState['usersState'] {
   switch (action.type) {
     case UsersReducerType['users/startFetch']:
-      return { users: [], isLoading: true, isError: false };
+      return { users: state.users, isLoading: true, isError: false };
     case UsersReducerType['users/completedFetch']:
       return { users: action.payload.users, isLoading: false, isError: false };
     case UsersReducerType['users/errorFetch']:

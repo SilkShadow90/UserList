@@ -5,7 +5,7 @@ import { BasicFabric, FabricMixins, staticImplements } from './BasicFabric';
 export class UserFabric extends BasicFabric<IUser> {
   private static instance?: UserFabric;
   validateModel(model: unknown): model is IUser {
-    return !!(model as IUser).first_name && !!(model as IUser).last_name;
+    return !!(model as IUser)?.first_name && !!(model as IUser)?.last_name;
   }
 
   generateModel(userData: IUser): User {
