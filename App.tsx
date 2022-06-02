@@ -7,6 +7,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
 import { NavigationScreens, RootStackParamList } from './src/types/navigationScreens';
 import { Strings } from './src/resources';
+import store from './src/redux';
+import { Provider } from 'react-redux';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,23 +22,25 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaView style={styles.wrapper}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NavigationContainer>
-        <RootStack.Navigator>
-          <RootStack.Screen
-            name={NavigationScreens.Home}
-            component={HomeScreen}
-            options={{ title: Strings.screenNames.Home }}
-          />
-          <RootStack.Screen
-            name={NavigationScreens.Details}
-            component={DetailsScreen}
-            options={{ title: Strings.screenNames.Details }}
-          />
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.wrapper}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <NavigationContainer>
+          <RootStack.Navigator>
+            <RootStack.Screen
+              name={NavigationScreens.Home}
+              component={HomeScreen}
+              options={{ title: Strings.screenNames.Home }}
+            />
+            <RootStack.Screen
+              name={NavigationScreens.Details}
+              component={DetailsScreen}
+              options={{ title: Strings.screenNames.Details }}
+            />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 };
 

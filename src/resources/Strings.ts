@@ -13,5 +13,6 @@ export const Strings = {
   },
   global: {
     continue: 'Продолжить',
+    retry: 'Попробовать снова',
   },
 } as const;
