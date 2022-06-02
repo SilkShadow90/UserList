@@ -1,4 +1,5 @@
 import { Alert, AlertButton, AlertOptions } from 'react-native';
+import { Strings } from '../resources';
 
 export type AlertParams = {
   title: string;
@@ -27,7 +28,7 @@ export class AlertService {
 
   private static getContinueButton(id: number): AlertButton {
     return {
-      text: 'Продолжить',
+      text: Strings.global.continue,
       onPress: () => {
         if (AlertService.alertMap.has(id)) {
           AlertService.alertMap.delete(id);

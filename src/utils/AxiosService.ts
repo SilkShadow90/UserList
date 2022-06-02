@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { AlertService } from './AlertService';
+import { Strings, Config } from '../resources';
 
 type Support = {
   url: string;
@@ -29,7 +30,7 @@ export class AxiosService {
     }
 
     AxiosService._instance = axios.create({
-      baseURL: 'https://reqres.in/api',
+      baseURL: Config.baseURL,
     });
 
     return this.instance;
@@ -48,10 +49,10 @@ export class AxiosService {
       }
 
       if (isSuccess && validateFunc) {
-        throw new Error('Данные не прошли валидацию!');
+        throw new Error(Strings.errors.validateError);
       }
 
-      throw new Error('Что-то пошло не так!!!');
+      throw new Error(Strings.errors.someError);
     } catch (error) {
       await AxiosService.showError((error as Error)?.message);
     }
@@ -62,6 +63,6 @@ export class AxiosService {
   }
 
   private static async showError(text?: string): Promise<void> {
-    await AlertService.showAlert({ title: text ?? 'Что-то пошло не так!!!' });
+    await AlertService.showAlert({ title: text ?? Strings.errors.someError });
   }
 }

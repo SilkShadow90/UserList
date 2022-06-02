@@ -1,19 +1,12 @@
 import * as React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  useColorScheme,
-  StyleSheet,
-} from 'react-native';
+import { SafeAreaView, StatusBar, useColorScheme, StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
-import {
-  NavigationScreens,
-  RootStackParamList,
-} from './src/shared/navigationScreens';
+import { NavigationScreens, RootStackParamList } from './src/types/navigationScreens';
+import { Strings } from './src/resources';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -34,11 +27,12 @@ const App = () => {
           <RootStack.Screen
             name={NavigationScreens.Home}
             component={HomeScreen}
-            options={{ title: 'Список пользователей' }}
+            options={{ title: Strings.screenNames.Home }}
           />
           <RootStack.Screen
             name={NavigationScreens.Details}
             component={DetailsScreen}
+            options={{ title: Strings.screenNames.Details }}
           />
         </RootStack.Navigator>
       </NavigationContainer>
