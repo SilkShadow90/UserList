@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { NavigationScreens, RootStackParamList } from '../../types/navigationScreens';
+
+import { NavigationScreens, RootStackParamList } from '../../types';
 import { Images } from '../../resources';
 import { styles } from './index.styles';
 

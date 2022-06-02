@@ -3,12 +3,12 @@ import { SafeAreaView, StatusBar, useColorScheme, StyleSheet } from 'react-nativ
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/HomeScreen';
-import DetailsScreen from './src/screens/DetailsScreen';
-import { NavigationScreens, RootStackParamList } from './src/types/navigationScreens';
+import { Provider } from 'react-redux';
+
+import { HomeScreen, DetailsScreen } from './src/screens';
+import { NavigationScreens, RootStackParamList } from './src/types';
 import { Strings } from './src/resources';
 import store from './src/redux';
-import { Provider } from 'react-redux';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 

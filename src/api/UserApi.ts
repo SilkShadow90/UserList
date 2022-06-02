@@ -1,6 +1,5 @@
-import { AxiosService } from '../utils/AxiosService';
-import { User } from '../models/User';
-import { UserFabric } from '../models/UserFabric';
+import { AxiosService } from '../utils';
+import { User, UserFabric } from '../models';
 
 export class UserApi {
   public static async getUsers(page: number = 1): Promise<User[] | undefined> {

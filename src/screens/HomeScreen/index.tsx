@@ -1,21 +1,18 @@
 import React, { useCallback, useEffect } from 'react';
 import { FlatList, ListRenderItemInfo, RefreshControl, View } from 'react-native';
-import { NavigationScreens, RootStackParamList } from '../../types/navigationScreens';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { NavigationRow } from '../../components/NavigationRow';
-import { Loader } from '../../components/Loader';
-import { User } from '../../models/User';
-import { styles } from './index.styles';
+import { NavigationRow, ErrorWrapper, Loader, EmptyWrapper } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchUsers } from '../../redux/actionCreators/users';
-import { ErrorWrapper } from '../../components/ErrorWrapper';
-import { fetchUser } from '../../redux/actionCreators/user';
-import { EmptyWrapper } from '../../components/EmptyWrapper';
+import { fetchUsers, fetchUser } from '../../redux/actionCreators';
+
+import { NavigationScreens, RootStackParamList } from '../../types';
+import { User } from '../../models';
+import { styles } from './index.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
 
-const HomeScreen = ({}: Props) => {
+export const HomeScreen = ({}: Props) => {
   const { users, isLoading, isError } = useAppSelector(state => state.usersState || {});
   const { user: userData, isLoading: isUserLoading, id: userId } = useAppSelector(state => state.userState || {});
   const dispatch = useAppDispatch();
@@ -46,7 +43,7 @@ const HomeScreen = ({}: Props) => {
   return (
     <View style={styles.flex} pointerEvents={isUserLoading ? 'none' : 'auto'}>
       <FlatList
-        ListEmptyComponent={<EmptyWrapper />}
+        ListEmptyComponent={!isLoading ? <EmptyWrapper /> : null}
         refreshControl={<RefreshControl refreshing={!!users?.length && !!isLoading} onRefresh={onRefresh} />}
         style={styles.wrapper}
         contentContainerStyle={styles.intent}
@@ -66,5 +63,3 @@ const HomeScreen = ({}: Props) => {
     </View>
   );
 };
-
-export default HomeScreen;

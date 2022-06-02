@@ -1,8 +1,9 @@
 import { applyMiddleware, createStore, StoreEnhancer } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { rootReducer } from './reducers/root';
-import { AppState } from './types';
 import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { rootReducer } from './reducers/root';
+import { AppState } from '../types';
 
 type RootState = ReturnType<typeof rootReducer>;
 

@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react';
 import { View, Text, Image, ScrollView, Linking } from 'react-native';
-import { styles } from './index.styles';
+
 import { useAppSelector } from '../../redux/hooks';
 import { Strings } from '../../resources';
-import { AlertService } from '../../utils/AlertService';
-import { UserFabric } from '../../models/UserFabric';
-import { ErrorWrapper } from '../../components/ErrorWrapper';
+import { AlertService } from '../../utils';
+import { ErrorWrapper } from '../../components';
+import { UserFabric } from '../../models';
+import { styles } from './index.styles';
 
-const DetailsScreen = () => {
+export const DetailsScreen = () => {
   const { user } = useAppSelector(state => state.userState || {});
 
   const sendEmail = useCallback(async () => {
@@ -53,5 +54,3 @@ const DetailsScreen = () => {
     </View>
   );
 };
-
-export default DetailsScreen;
