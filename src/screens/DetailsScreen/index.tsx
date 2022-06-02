@@ -1,13 +1,18 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { styles } from './index.styles';
+import { useAppSelector } from '../../redux/hooks';
 
-const HomeScreen = () => {
+const DetailsScreen = () => {
+  const { user } = useAppSelector(state => state.userState || {});
+
   return (
     <View style={styles.wrapper}>
-      <Text>Details Screen</Text>
+      <Text>{user?.first_name}</Text>
+      <Text>{user?.last_name}</Text>
+      <Text>{user?.email}</Text>
     </View>
   );
 };
 
-export default HomeScreen;
+export default DetailsScreen;
