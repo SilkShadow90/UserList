@@ -1,26 +1,19 @@
-import { AxiosService, ListResponse, SingleResponse } from '../utils/AxiosService';
-import { isUser, User } from '../models/User';
+import { AxiosService } from '../utils/AxiosService';
+import { User } from '../models/User';
+import { UserFabric } from '../models/UserFabric';
 
 export class UserApi {
-  private static checkUsersValidate(data?: ListResponse<User[]> | SingleResponse<User>): boolean {
-    const { data: userData } = data || {};
-
-    return Array.isArray(userData) ? userData.every(user => isUser(user)) : isUser(userData);
-  }
-
   public static async getUsers(page: number = 1): Promise<User[]> {
     const query = `/users?page=${page}`;
+    const response = await AxiosService.get<User>(query, UserFabric.check);
 
-    const { data } = (await AxiosService.get<ListResponse<User[]>>(query, UserApi.checkUsersValidate)) || {};
-
-    return data?.data || [];
+    return (response?.data?.data && (UserFabric.create(response.data.data) as User[])) || [];
   }
 
   public static async getUser(id: number): Promise<User | undefined> {
     const query = `/users/${id}`;
+    const response = await AxiosService.get<User>(query, UserFabric.check);
 
-    const { data } = (await AxiosService.get<SingleResponse<User>>(query, UserApi.checkUsersValidate)) || {};
-
-    return data?.data;
+    return response?.data?.data && (UserFabric.create(response.data.data) as User);
   }
 }

@@ -18,6 +18,8 @@ export type ListResponse<T> = {
   total_pages: number;
 } & SingleResponse<T>;
 
+type Response<T> = ListResponse<T[]> | SingleResponse<T>;
+
 export class AxiosService {
   private static _instance?: AxiosInstance;
 
@@ -33,12 +35,15 @@ export class AxiosService {
     return this.instance;
   }
 
-  public static async get<T>(url: string, validateFunc?: (data: T) => boolean): Promise<AxiosResponse<T> | void> {
+  public static async get<T>(
+    url: string,
+    validateFunc?: (data: T | T[]) => boolean,
+  ): Promise<AxiosResponse<Response<T>> | void> {
     try {
-      const response = await AxiosService.instance.get<T>(url);
+      const response = await AxiosService.instance.get<Response<T>>(url);
       const isSuccess = AxiosService.isSuccess(response.status);
 
-      if (isSuccess && (validateFunc ? validateFunc(response.data) : true)) {
+      if (isSuccess && (validateFunc ? validateFunc(response.data?.data) : true)) {
         return response;
       }
 
