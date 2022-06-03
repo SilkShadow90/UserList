@@ -16,6 +16,7 @@ export const Strings = {
     continue: 'Продолжить',
     retry: 'Попробовать снова',
     noData: 'Нет данных',
+    back: 'Назад',
   },
   user: {
     name: 'Имя',

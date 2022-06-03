@@ -11,8 +11,11 @@ import { User } from '../../models';
 import { styles } from './index.styles';
 import { useTheme } from '../../hooks/useTheme';
 import { Strings } from '../../resources';
+import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
+
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 export const HomeScreen = ({}: Props) => {
   const { users, isLoading, isError, pagination, isLoadingMore } = useAppSelector(state => state.usersState || {});
@@ -21,6 +24,31 @@ export const HomeScreen = ({}: Props) => {
   const theme = useTheme();
 
   const navigationRowRef = useRef<NavigationRowRef>();
+
+  const activeScale = useSharedValue(1);
+  const scale = useSharedValue(1);
+  const opacity = useSharedValue(1);
+
+  useEffect(() => {
+    if (!isUserLoading) {
+      activeScale.value = withSpring(1);
+      scale.value = withSpring(1);
+      opacity.value = withSpring(1);
+    }
+  }, [activeScale, isUserLoading, opacity, scale]);
+
+  const activeAnimatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: activeScale.value }],
+    };
+  });
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+      transform: [{ scale: scale.value }],
+    };
+  });
 
   const startUploadUsers = useCallback(() => {
     dispatch(fetchUsers());
@@ -48,9 +76,13 @@ export const HomeScreen = ({}: Props) => {
 
   const getUser = useCallback(
     (id: number) => () => {
+      activeScale.value = withSpring(1.02);
+      scale.value = withSpring(0.95);
+      opacity.value = withSpring(0.7);
+
       dispatch(fetchUser(id));
     },
-    [dispatch],
+    [activeScale, dispatch, opacity, scale],
   );
 
   const renderFooter = useMemo(
@@ -75,14 +107,18 @@ export const HomeScreen = ({}: Props) => {
         style={styles.wrapper}
         contentContainerStyle={styles.intent}
         data={users}
-        renderItem={({ item: user }: ListRenderItemInfo<User>) => (
-          <NavigationRow
-            ref={userId === user.id ? (navigationRowRef as RefObject<NavigationRowRef>) : undefined}
-            text={`${user.firstName} ${user.lastName}`}
-            navigateScreen={NavigationScreens.Details}
-            isLoading={userId === user.id && !!isUserLoading}
-            onPress={getUser(user.id)}
-          />
+        renderItem={({ item: user, index }: ListRenderItemInfo<User>) => (
+          <AnimatedView
+            entering={FadeInDown.delay((index / (pagination?.perPageItemsCount || 1)) * 200)}
+            style={[userId === user.id ? activeAnimatedStyles : animatedStyles]}>
+            <NavigationRow
+              ref={userId === user.id ? (navigationRowRef as RefObject<NavigationRowRef>) : undefined}
+              text={`${user.firstName} ${user.lastName}`}
+              navigateScreen={NavigationScreens.Details}
+              isLoading={userId === user.id && !!isUserLoading}
+              onPress={getUser(user.id)}
+            />
+          </AnimatedView>
         )}
         keyExtractor={user => String(user.id)}
         onEndReachedThreshold={0.2}

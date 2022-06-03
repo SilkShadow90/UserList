@@ -8,6 +8,9 @@ import { ErrorWrapper } from '../../components';
 import { UserFabric } from '../../models';
 import { styles } from './index.styles';
 import { useTheme } from '../../hooks/useTheme';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
+
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 export const DetailsScreen = () => {
   const { user } = useAppSelector(state => state.userState || {});
@@ -27,30 +30,30 @@ export const DetailsScreen = () => {
 
   return (
     <View style={theme.wrapper}>
-      <View style={[theme.shadow, styles.avatarWrapper]}>
+      <AnimatedView entering={FadeIn.delay(100)} style={[theme.shadow, styles.avatarWrapper]}>
         {user?.avatar ? (
           <Image source={{ uri: user?.avatar }} style={styles.avatar} />
         ) : (
           <Text style={styles.notAvatarText}>{`${user?.firstName?.[0]}${user?.lastName?.[0]}`}</Text>
         )}
-      </View>
+      </AnimatedView>
 
       <ScrollView>
-        <View style={[styles.textWrapper, theme.placeholderBackground]}>
+        <AnimatedView entering={FadeInDown.delay(100)} style={[styles.textWrapper, theme.placeholderBackground]}>
           <Text style={theme.placeholder}>{Strings.user.name}</Text>
           <Text style={theme.title}>{user.firstName}</Text>
-        </View>
-        <View style={[styles.textWrapper, theme.placeholderBackground]}>
+        </AnimatedView>
+        <AnimatedView entering={FadeInDown.delay(150)} style={[styles.textWrapper, theme.placeholderBackground]}>
           <Text style={theme.placeholder}>{Strings.user.lastName}</Text>
           <Text style={theme.title}>{user.lastName}</Text>
-        </View>
+        </AnimatedView>
         {!!user?.email && (
-          <View style={[styles.textWrapper, theme.placeholderBackground]}>
+          <AnimatedView entering={FadeInDown.delay(200)} style={[styles.textWrapper, theme.placeholderBackground]}>
             <Text style={theme.placeholder}>{Strings.user.email}</Text>
             <Text style={styles.email} onPress={sendEmail}>
               {user?.email}
             </Text>
-          </View>
+          </AnimatedView>
         )}
       </ScrollView>
     </View>

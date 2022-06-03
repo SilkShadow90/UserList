@@ -26,7 +26,7 @@ const App = () => {
       <SafeAreaView style={styles.wrapper}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
-          <RootStack.Navigator>
+          <RootStack.Navigator screenOptions={{ headerBackTitle: Strings.global.back }}>
             <RootStack.Screen
               name={NavigationScreens.Home}
               component={HomeScreen}
