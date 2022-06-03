@@ -12,4 +12,11 @@ export const styles = StyleSheet.create({
   intent: {
     paddingBottom: 24,
   },
+  footer: {
+    margin: 8,
+    alignSelf: 'center',
+  },
+  hint: {
+    fontSize: 12,
+  },
 });

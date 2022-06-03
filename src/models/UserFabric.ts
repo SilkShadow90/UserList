@@ -1,11 +1,14 @@
 import { IUser, User } from './User';
 import { BasicFabric, FabricMixins, staticImplements } from './BasicFabric';
 
-@staticImplements<FabricMixins<IUser>>()
-export class UserFabric extends BasicFabric<IUser> {
+@staticImplements<FabricMixins<User>>()
+export class UserFabric extends BasicFabric<User> {
   private static instance?: UserFabric;
-  validateModel(model: unknown): model is IUser {
-    return !!(model as IUser)?.first_name && !!(model as IUser)?.last_name;
+  validateModel(model: unknown): model is User {
+    return (
+      !!((model as IUser)?.first_name && (model as IUser)?.last_name) ||
+      !!((model as User)?.firstName && (model as User)?.lastName)
+    );
   }
 
   generateModel(userData: IUser): User {

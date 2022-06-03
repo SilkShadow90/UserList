@@ -1,4 +1,4 @@
-import { NavigationScreens } from '../types/navigationScreens';
+import { NavigationScreens } from '../types';
 
 const screenNames: Record<NavigationScreens, string> = {
   [NavigationScreens.Home]: 'Список пользователей',
@@ -21,5 +21,6 @@ export const Strings = {
     name: 'Имя',
     lastName: 'Фамилия',
     email: 'e-mail',
+    allUpload: 'Список пользователей полностью загружен',
   },
 } as const;

@@ -6,18 +6,18 @@ export interface IUser {
   avatar?: string;
 }
 
-export class User implements IUser {
+export class User {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email?: string;
   avatar?: string;
 
   public constructor(model: IUser) {
     this.id = model.id;
     this.email = model.email;
-    this.first_name = model.first_name;
-    this.last_name = model.last_name;
+    this.firstName = model.first_name;
+    this.lastName = model.last_name;
     this.avatar = model.avatar;
   }
 }

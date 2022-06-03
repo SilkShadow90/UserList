@@ -31,18 +31,18 @@ export const DetailsScreen = () => {
         {user?.avatar ? (
           <Image source={{ uri: user?.avatar }} style={styles.avatar} />
         ) : (
-          <Text style={styles.notAvatarText}>{`${user?.first_name?.[0]}${user?.last_name?.[0]}`}</Text>
+          <Text style={styles.notAvatarText}>{`${user?.firstName?.[0]}${user?.lastName?.[0]}`}</Text>
         )}
       </View>
 
       <ScrollView>
         <View style={[styles.textWrapper, theme.placeholderBackground]}>
           <Text style={theme.placeholder}>{Strings.user.name}</Text>
-          <Text style={theme.title}>{user.first_name}</Text>
+          <Text style={theme.title}>{user.firstName}</Text>
         </View>
         <View style={[styles.textWrapper, theme.placeholderBackground]}>
           <Text style={theme.placeholder}>{Strings.user.lastName}</Text>
-          <Text style={theme.title}>{user.last_name}</Text>
+          <Text style={theme.title}>{user.lastName}</Text>
         </View>
         {!!user?.email && (
           <View style={[styles.textWrapper, theme.placeholderBackground]}>
