@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, StatusBar, useColorScheme, StyleSheet } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 
@@ -25,7 +25,7 @@ const App = () => {
     <Provider store={store}>
       <SafeAreaView style={styles.wrapper}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <NavigationContainer>
+        <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
           <RootStack.Navigator>
             <RootStack.Screen
               name={NavigationScreens.Home}

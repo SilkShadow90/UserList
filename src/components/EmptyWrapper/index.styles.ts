@@ -10,6 +10,5 @@ export const styles = StyleSheet.create({
   },
   text: {
     paddingVertical: 12,
-    fontSize: 24,
   },
 });

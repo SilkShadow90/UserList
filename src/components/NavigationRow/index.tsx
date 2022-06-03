@@ -1,48 +1,59 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { forwardRef, useCallback, useImperativeHandle } from 'react';
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import { NavigationScreens, RootStackParamList } from '../../types';
 import { Images } from '../../resources';
 import { styles } from './index.styles';
+import { useTheme } from '../../hooks/useTheme';
 
 type Props = {
   text: string;
   isLoading: boolean;
   navigateScreen: NavigationScreens;
-  isSuccess?: boolean;
   onPress?(): void;
 };
 
-export const NavigationRow = ({ text, navigateScreen, isLoading, onPress, isSuccess }: Props) => {
-  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-
-  useEffect(() => {
-    if (onPress && isSuccess) {
-      navigate(navigateScreen);
-    }
-  }, [isSuccess, navigate, navigateScreen, onPress]);
-
-  const toDetails = useCallback(() => {
-    if (onPress && !isSuccess) {
-      onPress();
-    } else {
-      navigate(navigateScreen);
-    }
-  }, [isSuccess, onPress, navigate, navigateScreen]);
-
-  return (
-    <TouchableOpacity style={styles.item} onPress={toDetails}>
-      <View style={styles.textItem}>
-        <Text style={styles.text}>{text}</Text>
-        <View style={styles.rightItem}>
-          {isLoading ? (
-            <ActivityIndicator color={'c3c3c3'} />
-          ) : (
-            <Image source={Images.chevron_forward} style={styles.loader} />
-          )}
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+export type NavigationRowRef = {
+  handle(): void;
 };
+
+export const NavigationRow = forwardRef<NavigationRowRef, Props>(
+  ({ text, navigateScreen, isLoading, onPress }: Props, ref) => {
+    const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+    const theme = useTheme();
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        handle: () => {
+          navigate(navigateScreen);
+        },
+      }),
+      [navigate, navigateScreen],
+    );
+
+    const toDetails = useCallback(() => {
+      if (onPress) {
+        onPress();
+      } else {
+        navigate(navigateScreen);
+      }
+    }, [onPress, navigate, navigateScreen]);
+
+    return (
+      <TouchableOpacity style={[theme.shadow, theme.buttonColor, styles.item]} onPress={toDetails}>
+        <View style={styles.textItem}>
+          <Text style={theme.text}>{text}</Text>
+          <View style={styles.rightItem}>
+            {isLoading ? (
+              <ActivityIndicator color={theme.loader.color} />
+            ) : (
+              <Image source={Images.chevron_forward} style={theme.icon} />
+            )}
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  },
+);

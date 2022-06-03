@@ -3,12 +3,8 @@ import { Dimensions, StyleSheet } from 'react-native';
 const size = Dimensions.get('window').width - 180;
 
 export const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
   textWrapper: {
     flexDirection: 'row',
-    backgroundColor: '#b2b2b222',
     marginVertical: 8,
     paddingHorizontal: 16,
     paddingVertical: 8,
@@ -44,10 +40,6 @@ export const styles = StyleSheet.create({
   },
   notAvatarText: {
     fontSize: 78,
-    color: '#333333',
-  },
-  title: {
-    fontSize: 24,
     color: '#333333',
   },
   email: {

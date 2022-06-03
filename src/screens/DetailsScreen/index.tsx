@@ -7,9 +7,11 @@ import { AlertService } from '../../utils';
 import { ErrorWrapper } from '../../components';
 import { UserFabric } from '../../models';
 import { styles } from './index.styles';
+import { useTheme } from '../../hooks/useTheme';
 
 export const DetailsScreen = () => {
   const { user } = useAppSelector(state => state.userState || {});
+  const theme = useTheme();
 
   const sendEmail = useCallback(async () => {
     try {
@@ -24,8 +26,8 @@ export const DetailsScreen = () => {
   }
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.avatarWrapper}>
+    <View style={theme.wrapper}>
+      <View style={[theme.shadow, styles.avatarWrapper]}>
         {user?.avatar ? (
           <Image source={{ uri: user?.avatar }} style={styles.avatar} />
         ) : (
@@ -34,17 +36,17 @@ export const DetailsScreen = () => {
       </View>
 
       <ScrollView>
-        <View style={styles.textWrapper}>
-          <Text style={styles.placeHolder}>{Strings.user.name}</Text>
-          <Text style={styles.title}>{user.first_name}</Text>
+        <View style={[styles.textWrapper, theme.placeholderBackground]}>
+          <Text style={theme.placeholder}>{Strings.user.name}</Text>
+          <Text style={theme.title}>{user.first_name}</Text>
         </View>
-        <View style={styles.textWrapper}>
-          <Text style={styles.placeHolder}>{Strings.user.lastName}</Text>
-          <Text style={styles.title}>{user.last_name}</Text>
+        <View style={[styles.textWrapper, theme.placeholderBackground]}>
+          <Text style={theme.placeholder}>{Strings.user.lastName}</Text>
+          <Text style={theme.title}>{user.last_name}</Text>
         </View>
         {!!user?.email && (
-          <View style={styles.textWrapper}>
-            <Text style={styles.placeHolder}>{Strings.user.email}</Text>
+          <View style={[styles.textWrapper, theme.placeholderBackground]}>
+            <Text style={theme.placeholder}>{Strings.user.email}</Text>
             <Text style={styles.email} onPress={sendEmail}>
               {user?.email}
             </Text>

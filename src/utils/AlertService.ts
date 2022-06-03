@@ -1,4 +1,4 @@
-import { Alert, AlertButton, AlertOptions } from 'react-native';
+import { Alert, AlertButton, AlertOptions, Vibration } from 'react-native';
 import { Strings } from '../resources';
 
 export type AlertParams = {
@@ -22,6 +22,7 @@ export class AlertService {
     if (AlertService.alertMap.size) {
       const { title, message, buttons, options } = Array.from(AlertService.alertMap)[0][1];
 
+      Vibration.vibrate();
       Alert.alert(title, message, buttons, options);
     }
   }
