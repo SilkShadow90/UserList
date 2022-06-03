@@ -11,7 +11,7 @@ export const fetchUsers =
     await delay(1000);
     const users = await UserApi.getUsers();
 
-    if (users?.length) {
+    if (Array.isArray(users)) {
       dispatch({ type: UsersReducerType['users/completedFetch'], payload: { users } });
     } else {
       dispatch({ type: UsersReducerType['users/errorFetch'], payload: {} });

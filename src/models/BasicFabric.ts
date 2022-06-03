@@ -15,6 +15,10 @@ export abstract class BasicFabric<T extends {}> {
 
   protected validate(model: unknown): model is T | T[] {
     if (Array.isArray(model)) {
+      if (!model.length) {
+        return true;
+      }
+
       return this.validateModels(model);
     }
 
