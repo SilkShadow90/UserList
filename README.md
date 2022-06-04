@@ -44,6 +44,8 @@ pods устанавливаются автоматически после node_m
 если metro не запустился автоматически
 <pre>react-native start</pre>
 
+### [Список скриптов](package.json)
+
 ## api
 
 Содержит классы для взаимодействия с бекендом
@@ -88,16 +90,6 @@ pods устанавливаются автоматически после node_m
 ## utils
 
 Содержит сервисы и дополнительные функции
-
-## [Список скриптов](package.json)
-
-- "android": "react-native run-android",
-- "ios": "react-native run-ios",
-- "start": "react-native start",
-- "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-- "postinstall": "npx pod-install ios",
-- "prettier": "prettier --write ./src",
-- "generateProjectTree": "npx markdown-notes-tree --ignore=ios --ignore=android --noSubdirectoryTrees"
 
 ## Список используемых библиотек
 
