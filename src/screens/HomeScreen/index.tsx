@@ -1,3 +1,7 @@
+/**
+ * Главный экран приложения - содержит список пользователей
+ */
+
 import React, { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 import { ActivityIndicator, FlatList, ListRenderItemInfo, RefreshControl, View, Text, Platform } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -10,7 +14,7 @@ import { NavigationScreens, RootStackParamList } from '../../types';
 import { User } from '../../models';
 import { styles } from './index.styles';
 import { useTheme } from '../../hooks/useTheme';
-import { Strings } from '../../resources';
+import { Config, Strings } from '../../resources';
 import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
@@ -111,9 +115,10 @@ export const HomeScreen = ({}: Props) => {
         data={users}
         renderItem={({ item: user, index }: ListRenderItemInfo<User>) => (
           <AnimatedView
-            entering={FadeInDown.delay((index / (pagination?.perPageItemsCount || 1)) * 200)}
+            entering={FadeInDown.delay((index / (pagination?.perPageItemsCount || 1)) * Config.animationMSStep)}
             collapsable={true}
-            style={[userId === user.id ? activeAnimatedStyles : animatedStyles]}>
+            style={[userId === user.id ? activeAnimatedStyles : animatedStyles]}
+          >
             <NavigationRow
               ref={userId === user.id ? (navigationRowRef as RefObject<NavigationRowRef>) : undefined}
               text={`${user.firstName} ${user.lastName}`}

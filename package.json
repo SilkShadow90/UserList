@@ -9,6 +9,7 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "postinstall": "npx pod-install ios",
+    "prettier": "prettier --write ./src",
     "generateProjectTree": "npx markdown-notes-tree --ignore=ios --ignore=android --noSubdirectoryTrees"
   },
   "dependencies": {

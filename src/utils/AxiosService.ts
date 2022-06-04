@@ -1,6 +1,14 @@
+/**
+ * @name AxiosService
+ * @description сервис выполнения запросов
+ * @static метод get отправляет get запрос и проверяет полученные данные
+ * @example AxiosService.get('url', validateFunction)
+ */
+
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { AlertService } from './AlertService';
 import { Strings, Config } from '../resources';
+import { IPagination } from '../models';
 
 type Support = {
   url: string;
@@ -12,12 +20,7 @@ export type SingleResponse<T> = {
   support: Support;
 };
 
-export type ListResponse<T> = {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-} & SingleResponse<T>;
+export type ListResponse<T> = IPagination & SingleResponse<T>;
 
 type Response<T> = ListResponse<T[]> | SingleResponse<T>;
 
@@ -70,11 +73,11 @@ export class AxiosService {
     }
   }
 
-  public static isSuccess(status: number): boolean {
+  private static isSuccess(status: number): boolean {
     return status === 200;
   }
 
-  public static notFound(status: number): boolean {
+  private static notFound(status: number): boolean {
     return status === 404;
   }
 

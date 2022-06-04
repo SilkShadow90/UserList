@@ -1,3 +1,8 @@
+/**
+ * @name useTheme
+ * @description хук для получения основных стилей приложения и реакции на смену темы
+ */
+
 import { Platform, StyleSheet, useColorScheme } from 'react-native';
 import { useMemo } from 'react';
 import { Colors, ColorSchemes } from '../resources';

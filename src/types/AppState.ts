@@ -1,3 +1,7 @@
+/**
+ * AppState - интерфейс хранилища Redux
+ */
+
 import { User } from '../models';
 import { Pagination } from '../models';
 

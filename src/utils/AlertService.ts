@@ -1,3 +1,11 @@
+/**
+ * @name AlertService
+ * @description сервис выводящий Alert и формирующий их в очередь
+ * @static showAlert<AlertParams> - метод отправляет объект<AlertParams> в очередь и выводит Alert если очередь свободна
+ * @static isEmptyStack - метод проверяет свободна ли очередь
+ * @example showAlert<AlertParams>(object)
+ */
+
 import { Alert, AlertButton, AlertOptions, Vibration } from 'react-native';
 import { Strings } from '../resources';
 
