@@ -89,7 +89,7 @@ pods устанавливаются автоматически после node_m
 
 Содержит сервисы и дополнительные функции
 
-## Список скриптов
+## [Список скриптов](package.json)
 
 - "android": "react-native run-android",
 - "ios": "react-native run-ios",
@@ -98,3 +98,11 @@ pods устанавливаются автоматически после node_m
 - "postinstall": "npx pod-install ios",
 - "prettier": "prettier --write ./src",
 - "generateProjectTree": "npx markdown-notes-tree --ignore=ios --ignore=android --noSubdirectoryTrees"
+
+## Список используемых библиотек
+
+- [axios](https://github.com/axios/axios)
+- [redux](https://github.com/reduxjs/redux)
+- [redux-thunk](https://github.com/reduxjs/redux-thunk)
+- [react-navigation](https://github.com/react-navigation/react-navigation)
+- [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
