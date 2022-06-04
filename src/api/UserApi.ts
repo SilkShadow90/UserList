@@ -1,7 +1,6 @@
 import { AxiosService } from '../utils';
 import { User, UserFabric } from '../models';
-import { PaginationFabric } from '../models/PaginationFabric';
-import { Pagination } from '../models/Pagination';
+import { PaginationFabric, Pagination } from '../models';
 
 type UserList = {
   users: User[];

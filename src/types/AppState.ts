@@ -1,5 +1,5 @@
 import { User } from '../models';
-import { Pagination } from '../models/Pagination';
+import { Pagination } from '../models';
 
 export interface AppState {
   usersState: {
