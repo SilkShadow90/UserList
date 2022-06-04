@@ -100,7 +100,7 @@ export const HomeScreen = ({}: Props) => {
   }
 
   return (
-    <View style={styles.flex} pointerEvents={isUserLoading ? 'none' : 'auto'}>
+    <View style={theme.wrapper} pointerEvents={isUserLoading ? 'none' : 'auto'}>
       <FlatList
         ListEmptyComponent={!isLoading ? <EmptyWrapper /> : null}
         refreshControl={<RefreshControl refreshing={!!users?.length && !!isLoading} onRefresh={onRefresh} />}

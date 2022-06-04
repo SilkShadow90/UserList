@@ -15,17 +15,6 @@ export const styles = StyleSheet.create({
   avatarWrapper: {
     margin: 24,
     borderWidth: 4,
-    borderColor: '#b2b2b222',
-    backgroundColor: '#b2b2b222',
-    shadowColor: '#8b8b8b',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-
-    elevation: 8,
     height: size + 4,
     width: size + 4,
     borderRadius: size / 2,
@@ -40,14 +29,5 @@ export const styles = StyleSheet.create({
   },
   notAvatarText: {
     fontSize: 78,
-    color: '#333333',
-  },
-  email: {
-    fontSize: 20,
-    color: '#317e9b',
-  },
-  placeHolder: {
-    fontSize: 20,
-    color: '#8b8b8b',
   },
 });

@@ -9,6 +9,7 @@ import { UserFabric } from '../../models';
 import { styles } from './index.styles';
 import { useTheme } from '../../hooks/useTheme';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
+import { getAbbreviation } from '../../utils';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -30,11 +31,18 @@ export const DetailsScreen = () => {
 
   return (
     <View style={theme.wrapper}>
-      <AnimatedView entering={FadeIn.delay(100)} style={[theme.shadow, styles.avatarWrapper]}>
+      <AnimatedView
+        entering={FadeIn.delay(100)}
+        style={[
+          theme.shadow,
+          theme.placeholderBackground,
+          { borderColor: theme.placeholderBackground.backgroundColor },
+          styles.avatarWrapper,
+        ]}>
         {user?.avatar ? (
           <Image source={{ uri: user?.avatar }} style={styles.avatar} />
         ) : (
-          <Text style={styles.notAvatarText}>{`${user?.firstName?.[0]}${user?.lastName?.[0]}`}</Text>
+          <Text style={[theme.text, styles.notAvatarText]}>{getAbbreviation(user?.firstName, user?.lastName)}</Text>
         )}
       </AnimatedView>
 
@@ -50,7 +58,7 @@ export const DetailsScreen = () => {
         {!!user?.email && (
           <AnimatedView entering={FadeInDown.delay(200)} style={[styles.textWrapper, theme.placeholderBackground]}>
             <Text style={theme.placeholder}>{Strings.user.email}</Text>
-            <Text style={styles.email} onPress={sendEmail}>
+            <Text style={[theme.text, theme.link]} onPress={sendEmail}>
               {user?.email}
             </Text>
           </AnimatedView>

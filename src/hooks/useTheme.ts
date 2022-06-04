@@ -1,8 +1,9 @@
 import { StyleSheet, useColorScheme } from 'react-native';
 import { useMemo } from 'react';
+import { Colors, ColorSchemes } from '../resources';
 
 export const useTheme = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const mode: ColorSchemes = useColorScheme() === 'dark' ? ColorSchemes.dark : ColorSchemes.default;
 
   const styles = useMemo(
     () =>
@@ -16,7 +17,7 @@ export const useTheme = () => {
           alignItems: 'center',
         },
         shadow: {
-          shadowColor: '#8b8b8b',
+          shadowColor: Colors[mode].placeholder,
           shadowOffset: {
             width: 0,
             height: 4,
@@ -27,33 +28,36 @@ export const useTheme = () => {
           elevation: 4,
         },
         title: {
-          color: isDarkMode ? '#f3f3f3' : '#333333',
+          color: Colors[mode].primary,
           fontSize: 24,
         },
         text: {
-          color: isDarkMode ? '#f3f3f3' : '#333333',
+          color: Colors[mode].primary,
           fontSize: 20,
         },
         placeholder: {
-          color: isDarkMode ? '#f3f3f340' : '#8b8b8b',
+          color: Colors[mode].placeholder,
           fontSize: 20,
         },
         placeholderBackground: {
-          backgroundColor: isDarkMode ? '#b2b2b212' : '#b2b2b222',
+          backgroundColor: Colors[mode].placeholderBackground,
         },
         buttonColor: {
-          backgroundColor: isDarkMode ? '#0a78ffcc' : '#c3c3c3',
+          backgroundColor: Colors[mode].accent,
         },
         icon: {
           width: 30,
           height: 30,
-          tintColor: isDarkMode ? '#f3f3f3' : '#333333',
+          tintColor: Colors[mode].primary,
         },
         loader: {
-          color: isDarkMode ? '#f3f3f3' : '#333333',
+          color: Colors[mode].primary,
+        },
+        link: {
+          color: Colors[mode].link,
         },
       } as const),
-    [isDarkMode],
+    [mode],
   );
 
   return StyleSheet.create(styles);
