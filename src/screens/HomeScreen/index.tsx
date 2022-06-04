@@ -1,5 +1,5 @@
 import React, { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
-import { ActivityIndicator, FlatList, ListRenderItemInfo, RefreshControl, View, Text } from 'react-native';
+import { ActivityIndicator, FlatList, ListRenderItemInfo, RefreshControl, View, Text, Platform } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { NavigationRow, ErrorWrapper, Loader, EmptyWrapper, NavigationRowRef } from '../../components';
@@ -76,9 +76,11 @@ export const HomeScreen = ({}: Props) => {
 
   const getUser = useCallback(
     (id: number) => () => {
-      activeScale.value = withSpring(1.02);
       scale.value = withSpring(0.95);
       opacity.value = withSpring(0.7);
+      if (Platform.OS === 'ios') {
+        activeScale.value = withSpring(1.02);
+      }
 
       dispatch(fetchUser(id));
     },
@@ -110,6 +112,7 @@ export const HomeScreen = ({}: Props) => {
         renderItem={({ item: user, index }: ListRenderItemInfo<User>) => (
           <AnimatedView
             entering={FadeInDown.delay((index / (pagination?.perPageItemsCount || 1)) * 200)}
+            collapsable={true}
             style={[userId === user.id ? activeAnimatedStyles : animatedStyles]}>
             <NavigationRow
               ref={userId === user.id ? (navigationRowRef as RefObject<NavigationRowRef>) : undefined}

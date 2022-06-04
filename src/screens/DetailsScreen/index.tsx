@@ -15,6 +15,7 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 
 export const DetailsScreen = () => {
   const { user } = useAppSelector(state => state.userState || {});
+
   const theme = useTheme();
 
   const sendEmail = useCallback(async () => {
@@ -40,7 +41,7 @@ export const DetailsScreen = () => {
           styles.avatarWrapper,
         ]}>
         {user?.avatar ? (
-          <Image source={{ uri: user?.avatar }} style={styles.avatar} />
+          <Image source={{ uri: user?.avatar }} style={[theme.placeholderBackground, styles.avatar]} />
         ) : (
           <Text style={[theme.text, styles.notAvatarText]}>{getAbbreviation(user?.firstName, user?.lastName)}</Text>
         )}

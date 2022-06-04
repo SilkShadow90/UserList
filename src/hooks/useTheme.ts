@@ -1,4 +1,4 @@
-import { StyleSheet, useColorScheme } from 'react-native';
+import { Platform, StyleSheet, useColorScheme } from 'react-native';
 import { useMemo } from 'react';
 import { Colors, ColorSchemes } from '../resources';
 
@@ -10,6 +10,8 @@ export const useTheme = () => {
       ({
         wrapper: {
           flex: 1,
+          marginTop: Platform.OS === 'ios' ? 0 : 56,
+          overflow: 'visible',
         },
         centeredWrapper: {
           flex: 1,
