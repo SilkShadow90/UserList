@@ -9,7 +9,7 @@ export const Strings = {
   screenNames,
   errors: {
     someError: 'Что-то пошло не так!!!',
-    validateError: 'Данные не прошли валидацию!',
+    validateError: 'Данные не соответствуют ожидаемой модели!',
     notFound: 'Данные не найдены!',
   },
   global: {

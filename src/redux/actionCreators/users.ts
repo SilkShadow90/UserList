@@ -1,7 +1,7 @@
 import { UserApi } from '../../api/UserApi';
 import { UsersReducerType } from '../reducers/users';
 import { AppThunk } from '../index';
-import { delay } from '../../utils/common';
+import { delay } from '../../utils';
 
 export const fetchUsers =
   (): AppThunk =>
@@ -23,7 +23,6 @@ export const fetchMoreUsers =
   async (dispatch, getState): Promise<void> => {
     dispatch({ type: UsersReducerType['users/startMoreFetch'], payload: {} });
 
-    await delay(1000);
     const { users = [], pagination } =
       (await UserApi.getUsers((getState().usersState?.pagination?.currentPage || 1) + 1)) || {};
 

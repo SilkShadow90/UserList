@@ -25,7 +25,7 @@ export const DetailsScreen = () => {
     }
   }, [user]);
 
-  if (!UserFabric.check(user)) {
+  if (!UserFabric.checkModel(user)) {
     return <ErrorWrapper />;
   }
 

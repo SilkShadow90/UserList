@@ -2,24 +2,18 @@ import { IPagination, Pagination } from './Pagination';
 import { BasicFabric, FabricMixins, staticImplements } from './BasicFabric';
 
 @staticImplements<FabricMixins<Pagination>>()
-export class PaginationFabric extends BasicFabric<Pagination> {
+export class PaginationFabric extends BasicFabric<Pagination, IPagination> {
   private static instance?: PaginationFabric;
-  validateModel(model: unknown): model is Pagination {
+  validateModel(model: object): model is Pagination {
+    return Object.keys(Pagination.prototype).every(property => model.hasOwnProperty(property));
+  }
+
+  validateInterface(model: object): model is IPagination {
     return (
-      !!(
-        (model as IPagination)?.per_page &&
-        (model as IPagination)?.total_pages &&
-        (model as IPagination)?.total &&
-        (model as IPagination)?.page
-      ) ||
-      !!(
-        (model as Pagination)?.totalPages &&
-        (model as Pagination)?.currentPage &&
-        (model as Pagination)?.currentItemsCount &&
-        (model as Pagination)?.totalItemsCount &&
-        (model as Pagination)?.perPageItemsCount &&
-        (model as Pagination)?.isListEnd
-      )
+      model.hasOwnProperty('per_page') &&
+      model.hasOwnProperty('total_pages') &&
+      model.hasOwnProperty('total') &&
+      model.hasOwnProperty('page')
     );
   }
 
@@ -35,11 +29,19 @@ export class PaginationFabric extends BasicFabric<Pagination> {
     return PaginationFabric.instance.generate(data) as Pagination | void;
   }
 
-  public static check(data: unknown): data is Pagination {
+  public static checkInterface(data: unknown): data is IPagination {
     if (!PaginationFabric.instance) {
       PaginationFabric.instance = new PaginationFabric();
     }
 
-    return PaginationFabric.instance.validate(data);
+    return PaginationFabric.instance.initialValidate(data);
+  }
+
+  public static checkModel(data: unknown): data is Pagination {
+    if (!PaginationFabric.instance) {
+      PaginationFabric.instance = new PaginationFabric();
+    }
+
+    return PaginationFabric.instance.endValidate(data);
   }
 }

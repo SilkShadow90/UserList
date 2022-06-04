@@ -1,7 +1,7 @@
 import { UserApi } from '../../api/UserApi';
 import { UserReducerType } from '../reducers/user';
 import { AppThunk } from '../index';
-import { delay } from '../../utils/common';
+import { delay } from '../../utils';
 
 export const fetchUser =
   (id: number): AppThunk =>
