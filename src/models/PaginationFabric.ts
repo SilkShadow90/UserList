@@ -1,15 +1,17 @@
 import { IPagination, Pagination } from './Pagination';
 import { BasicFabric, FabricMixins, staticImplements } from './BasicFabric';
+import { isObject } from '../utils';
 
 @staticImplements<FabricMixins<Pagination>>()
 export class PaginationFabric extends BasicFabric<Pagination, IPagination> {
   private static instance?: PaginationFabric;
-  validateModel(model: object): model is Pagination {
-    return Object.keys(Pagination.prototype).every(property => model.hasOwnProperty(property));
+  validateModel(model: unknown): model is Pagination {
+    return isObject(model) && Object.keys(Pagination.prototype).every(property => model.hasOwnProperty(property));
   }
 
-  validateInterface(model: object): model is IPagination {
+  validateInterface(model: unknown): model is IPagination {
     return (
+      isObject(model) &&
       model.hasOwnProperty('per_page') &&
       model.hasOwnProperty('total_pages') &&
       model.hasOwnProperty('total') &&

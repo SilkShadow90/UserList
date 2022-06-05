@@ -1,15 +1,21 @@
 import { IUser, User } from './User';
 import { BasicFabric, FabricMixins, staticImplements } from './BasicFabric';
+import { isObject } from '../utils';
 
 @staticImplements<FabricMixins<User>>()
 export class UserFabric extends BasicFabric<User, IUser> {
   private static instance?: UserFabric;
-  validateModel(model: object): model is User {
-    return Object.keys(User.prototype).every(property => model.hasOwnProperty(property));
+  validateModel(model: unknown): model is User {
+    return isObject(model) && Object.keys(User.prototype).every(property => model.hasOwnProperty(property));
   }
 
-  validateInterface(model: object): model is IUser {
-    return model.hasOwnProperty('id') && model.hasOwnProperty('first_name') && model.hasOwnProperty('last_name');
+  validateInterface(model: unknown): model is IUser {
+    return (
+      isObject(model) &&
+      model.hasOwnProperty('id') &&
+      model.hasOwnProperty('first_name') &&
+      model.hasOwnProperty('last_name')
+    );
   }
 
   generateModel(userData: IUser): User {

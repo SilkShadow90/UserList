@@ -40,3 +40,14 @@ export async function mailTo(email: string): Promise<void> {
     await AlertService.showAlert({ title: (error as Error)?.message });
   }
 }
+
+/**
+ * @name isObject
+ * @description проверка является ли переменная объектом
+ * @param obj объект для проверки
+ * @return boolean
+ * @example isObject({})
+ */
+export function isObject(obj: unknown): obj is object {
+  return obj !== null && typeof obj === 'object';
+}
