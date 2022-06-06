@@ -14,8 +14,6 @@ process.argv.forEach((val, index, array) => {
 });
 
 const fs = require('fs');
-const { getModelTemplate } = require('./modelTemplate');
-const { getModelFabricTemplate } = require('./modelFabricTemplate');
 
 const getPath = name => `./src/models/${name}.ts`;
 
@@ -53,6 +51,12 @@ const writeFile = (fileName, template) => {
   });
 };
 
+const replaceModel = modelFileString =>
+  modelFileString
+    .replace('../src/models', '.')
+    .replace(/ModelTemplate/g, modelName)
+    .replace(/src\//g, '');
+
 (async () => {
   const isModelAvailable = await checkAvailableFile(modelName);
   const isModelFabricAvailable = await checkAvailableFile(modelFabricName);
@@ -61,8 +65,14 @@ const writeFile = (fileName, template) => {
     return;
   }
 
-  let isModelCreated = await writeFile(modelName, getModelTemplate(modelName));
-  let isModelFabricCreated = await writeFile(modelFabricName, getModelFabricTemplate(modelName));
+  const ModelTemplate = fs.readFileSync('./dev/ModelTemplate.ts');
+  const model = replaceModel(ModelTemplate.toString());
+
+  const ModelFabricTemplate = fs.readFileSync('./dev/ModelFabricTemplate.ts');
+  const modelFabric = replaceModel(ModelFabricTemplate.toString());
+
+  let isModelCreated = await writeFile(modelName, model);
+  let isModelFabricCreated = await writeFile(modelFabricName, modelFabric);
 
   if (isModelFabricCreated || isModelCreated) {
     console.log('Модель успешно создана');

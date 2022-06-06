@@ -1,17 +1,14 @@
-module.exports = {
-  getModelTemplate: model => `export interface I${model} {
+export interface IModelTemplate {
   property_one: any;
   property_two: any;
 }
 
-export class ${model} {
+export class ModelTemplate {
   propertyOne: any;
   propertyTwo: any;
 
-  public constructor(model: I${model}) {
+  public constructor(model: IModelTemplate) {
     this.propertyOne = model.property_one;
     this.propertyTwo = model.property_two;
   }
 }
-`,
-};
