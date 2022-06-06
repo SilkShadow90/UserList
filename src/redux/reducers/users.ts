@@ -22,64 +22,52 @@ export function usersReducer(
   switch (action.type) {
     case UsersReducerType['users/startFetch']:
       return {
+        ...state,
         pagination: undefined,
         users: state.users,
         isLoading: true,
         isError: false,
-
-        isErrorMore: false,
-        isLoadingMore: false,
       };
     case UsersReducerType['users/completedFetch']:
       return {
+        ...state,
         pagination: action.payload.pagination,
         users: action.payload.users,
         isLoading: false,
         isError: false,
-
-        isErrorMore: false,
-        isLoadingMore: false,
       };
     case UsersReducerType['users/errorFetch']:
       return {
+        ...state,
         pagination: undefined,
         users: [],
         isLoading: false,
         isError: true,
-
-        isErrorMore: false,
-        isLoadingMore: false,
       };
 
     case UsersReducerType['users/startMoreFetch']:
       return {
+        ...state,
         pagination: state.pagination,
         users: state.users,
         isLoadingMore: true,
         isErrorMore: false,
-
-        isLoading: false,
-        isError: false,
       };
     case UsersReducerType['users/completedMoreFetch']:
       return {
+        ...state,
         pagination: action.payload.pagination,
         users: [...(state.users || []), ...(action.payload.users || [])],
         isLoadingMore: false,
         isErrorMore: false,
-
-        isLoading: false,
-        isError: false,
       };
     case UsersReducerType['users/errorMoreFetch']:
       return {
+        ...state,
         pagination: state.pagination,
         users: state.users,
         isLoadingMore: false,
         isErrorMore: true,
-
-        isLoading: false,
-        isError: false,
       };
     default:
       return state;

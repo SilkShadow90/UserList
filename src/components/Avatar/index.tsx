@@ -32,12 +32,7 @@ export const Avatar = ({ imageUrl, size, text }: Props) => {
   return (
     <AnimatedView
       entering={FadeIn.duration(Config.animationMSStep * 2)}
-      style={[
-        theme.shadow,
-        theme.placeholderBackground,
-        { borderColor: theme.placeholderBackground.backgroundColor },
-        styles.avatarWrapper,
-      ]}
+      style={[theme.shadow, theme.placeholderBackground, theme.border, styles.avatarWrapper]}
     >
       {imageUrl && isValidImage ? (
         <Image source={{ uri: imageUrl }} style={[theme.placeholderBackground, styles.avatar]} />

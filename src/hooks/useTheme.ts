@@ -49,6 +49,9 @@ export const useTheme = () => {
         placeholderBackground: {
           backgroundColor: Colors[mode].placeholderBackground,
         },
+        border: {
+          borderColor: Colors[mode].placeholderBackground,
+        },
         buttonColor: {
           backgroundColor: Colors[mode].accent,
         },
