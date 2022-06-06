@@ -17,10 +17,6 @@ export abstract class BasicFabric<T extends {}, P extends {}> {
 
   protected initialValidate(model: unknown): model is P | P[] {
     if (Array.isArray(model)) {
-      if (!model.length) {
-        return true;
-      }
-
       return this.validateInterfaces(model);
     }
 
@@ -29,10 +25,6 @@ export abstract class BasicFabric<T extends {}, P extends {}> {
 
   protected endValidate(model: unknown): model is P | P[] {
     if (Array.isArray(model)) {
-      if (!model.length) {
-        return true;
-      }
-
       return this.validateModels(model);
     }
 
