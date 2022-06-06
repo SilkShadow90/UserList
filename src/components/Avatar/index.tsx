@@ -35,7 +35,9 @@ export const Avatar = ({ imageUrl, size, text }: Props) => {
       style={[theme.shadow, theme.placeholderBackground, theme.border, styles.avatarWrapper]}
     >
       {imageUrl && isValidImage ? (
-        <Image source={{ uri: imageUrl }} style={[theme.placeholderBackground, styles.avatar]} />
+        <AnimatedView entering={FadeIn.duration(Config.animationMSStep * 2)}>
+          <Image source={{ uri: imageUrl }} style={[theme.placeholderBackground, styles.avatar]} />
+        </AnimatedView>
       ) : (
         <Text style={[theme.text, styles.notAvatarText]}>{getAbbreviation(text)}</Text>
       )}
