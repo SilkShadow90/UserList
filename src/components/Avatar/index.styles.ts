@@ -1,6 +1,6 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, PixelRatio, StyleSheet } from 'react-native';
 
-const defaultSize = Dimensions.get('window').width - 180;
+const defaultSize = PixelRatio.roundToNearestPixel(Dimensions.get('window').width * 0.6);
 
 export const getStyles = (size: number = defaultSize) =>
   StyleSheet.create({
