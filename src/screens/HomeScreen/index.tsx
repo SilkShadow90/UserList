@@ -19,7 +19,9 @@ import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } fr
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
 
-const AnimatedView = Animated.createAnimatedComponent(View);
+const AnimatedView = React.memo(Animated.createAnimatedComponent(View), (prevProps, nextProps) => {
+  return prevProps.children === nextProps.children;
+});
 
 export const HomeScreen = ({}: Props) => {
   const { users, isLoading, isError, pagination, isLoadingMore } = useAppSelector(state => state.usersState || {});
