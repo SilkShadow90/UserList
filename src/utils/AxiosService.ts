@@ -6,7 +6,6 @@
  */
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { AlertService } from './AlertService';
 import { Strings, Config } from '../resources';
 import { IPagination } from '../models';
 
@@ -22,7 +21,7 @@ export type SingleResponse<T> = {
 
 export type ListResponse<T> = IPagination & SingleResponse<T>;
 
-type Response<T> = ListResponse<T[]> | SingleResponse<T>;
+export type Response<T> = ListResponse<T[]> | SingleResponse<T>;
 
 export class AxiosService {
   private static _instance?: AxiosInstance;
@@ -64,12 +63,12 @@ export class AxiosService {
       }
 
       if (isSuccess && validateFunc) {
-        throw new Error(Strings.errors.validateError);
+        AxiosService.showError(Strings.errors.validateError);
       }
 
-      throw new Error(Strings.errors.someError);
+      AxiosService.showError(Strings.errors.someError);
     } catch (error) {
-      await AxiosService.showError((error as Error)?.message);
+      throw error;
     }
   }
 
@@ -81,7 +80,7 @@ export class AxiosService {
     return status === 404;
   }
 
-  private static async showError(text?: string): Promise<void> {
-    await AlertService.showAlert({ title: text ?? Strings.errors.someError });
+  private static showError(text?: string): void {
+    throw new Error(text ?? Strings.errors.someError);
   }
 }
