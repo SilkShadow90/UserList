@@ -13,10 +13,15 @@ export class UserApi {
 
     try {
       const response = await AxiosService.get<User>(query, UserFabric.checkInterface);
-      const pagination = PaginationFabric.create(response?.data);
-      const users = response?.data?.data && (UserFabric.create(response.data.data) as User[]);
+      if (!response) return;
 
-      if (UserFabric.checkModel(users) && PaginationFabric.checkModel(pagination)) {
+      const rawData = response.data?.data;
+      if (!Array.isArray(rawData)) return;
+
+      const users = UserFabric.create(rawData);
+      const pagination = PaginationFabric.create(response.data);
+
+      if (users && pagination) {
         return { users, pagination };
       }
     } catch (error) {
@@ -29,8 +34,10 @@ export class UserApi {
 
     try {
       const response = await AxiosService.get<User>(query, UserFabric.checkInterface);
+      if (!response) return;
 
-      return response?.data?.data && (UserFabric.create(response.data.data) as User);
+      const rawData = response.data?.data;
+      return Array.isArray(rawData) ? undefined : UserFabric.create(rawData);
     } catch (error) {
       await AlertService.showAlert({ title: (error as Error).message });
     }

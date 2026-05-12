@@ -1,51 +1,30 @@
-export function staticImplements<T>() {
-  return <U extends T>(constructor: U) => {
-    constructor;
-  };
-}
-
-export interface FabricMixins<P> {
-  create(data: unknown): P | P[] | void;
-  checkModel(data: unknown): boolean;
-  checkInterface(data: unknown): boolean;
-}
-
-export abstract class BasicFabric<T extends {}, P extends {}> {
+export abstract class BasicFabric<T, P> {
   protected abstract validateInterface(object: unknown): object is P;
   protected abstract validateModel(model: unknown): model is T;
-  protected abstract generateModel(model: unknown): T;
+  protected abstract generateModel(model: P): T;
 
-  protected initialValidate(model: unknown): model is P | P[] {
-    if (Array.isArray(model)) {
-      return this.validateInterfaces(model);
+  protected checkInterface(data: unknown): data is P | P[] {
+    if (Array.isArray(data)) {
+      return data.every(item => this.validateInterface(item));
     }
-
-    return this.validateInterface(model);
+    return this.validateInterface(data);
   }
 
-  protected endValidate(model: unknown): model is P | P[] {
-    if (Array.isArray(model)) {
-      return this.validateModels(model);
+  protected checkModel(data: unknown): data is T | T[] {
+    if (Array.isArray(data)) {
+      return data.every(item => this.validateModel(item));
     }
-
-    return this.validateModel(model);
+    return this.validateModel(data);
   }
 
-  private validateModels(models: unknown[]): models is T[] {
-    return models.every(model => this.validateModel(model));
-  }
-
-  private validateInterfaces(models: unknown[]): models is P[] {
-    return models.every(model => this.validateInterface(model));
-  }
-
-  protected generate(models: unknown): T | T[] | void {
-    if (this.initialValidate(models)) {
-      if (Array.isArray(models)) {
-        return models.map(model => this.generateModel(model));
-      }
-
-      return this.generateModel(models);
+  protected create(data: unknown): T | T[] | undefined {
+    if (Array.isArray(data)) {
+      if (!data.every(item => this.validateInterface(item))) return undefined;
+      return data.map(item => this.generateModel(item));
     }
+    if (this.validateInterface(data)) {
+      return this.generateModel(data);
+    }
+    return undefined;
   }
 }

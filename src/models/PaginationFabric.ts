@@ -1,11 +1,21 @@
 import { IPagination, Pagination } from './Pagination';
-import { BasicFabric, FabricMixins, staticImplements } from './BasicFabric';
+import { BasicFabric } from './BasicFabric';
 import { isObject } from '../utils';
 
-@staticImplements<FabricMixins<Pagination>>()
 export class PaginationFabric extends BasicFabric<Pagination, IPagination> {
-  private static instance?: PaginationFabric;
-  validateModel(model: unknown): model is Pagination {
+  private static readonly instance = new PaginationFabric();
+
+  protected validateInterface(model: unknown): model is IPagination {
+    return (
+      isObject(model) &&
+      'per_page' in model &&
+      'total_pages' in model &&
+      'total' in model &&
+      'page' in model
+    );
+  }
+
+  protected validateModel(model: unknown): model is Pagination {
     return (
       isObject(model) &&
       'currentPage' in model &&
@@ -16,41 +26,20 @@ export class PaginationFabric extends BasicFabric<Pagination, IPagination> {
     );
   }
 
-  validateInterface(model: unknown): model is IPagination {
-    return (
-      isObject(model) &&
-      model.hasOwnProperty('per_page') &&
-      model.hasOwnProperty('total_pages') &&
-      model.hasOwnProperty('total') &&
-      model.hasOwnProperty('page')
-    );
+  protected generateModel(data: IPagination): Pagination {
+    return new Pagination(data);
   }
 
-  generateModel(userData: IPagination): Pagination {
-    return new Pagination(userData);
+  static create(data: unknown): Pagination | undefined {
+    const result = PaginationFabric.instance.create(data);
+    return Array.isArray(result) ? undefined : result;
   }
 
-  public static create(data: unknown): Pagination | void {
-    if (!PaginationFabric.instance) {
-      PaginationFabric.instance = new PaginationFabric();
-    }
-
-    return PaginationFabric.instance.generate(data) as Pagination | void;
+  static checkInterface(data: unknown): data is IPagination {
+    return !Array.isArray(data) && PaginationFabric.instance.checkInterface(data);
   }
 
-  public static checkInterface(data: unknown): data is IPagination {
-    if (!PaginationFabric.instance) {
-      PaginationFabric.instance = new PaginationFabric();
-    }
-
-    return PaginationFabric.instance.initialValidate(data);
-  }
-
-  public static checkModel(data: unknown): data is Pagination {
-    if (!PaginationFabric.instance) {
-      PaginationFabric.instance = new PaginationFabric();
-    }
-
-    return PaginationFabric.instance.endValidate(data);
+  static checkModel(data: unknown): data is Pagination {
+    return !Array.isArray(data) && PaginationFabric.instance.checkModel(data);
   }
 }
