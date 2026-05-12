@@ -6,7 +6,12 @@ import { isObject } from '../utils';
 export class UserFabric extends BasicFabric<User, IUser> {
   private static instance?: UserFabric;
   validateModel(model: unknown): model is User {
-    return isObject(model) && Object.keys(User.prototype).every(property => model.hasOwnProperty(property));
+    return (
+      isObject(model) &&
+      'id' in model &&
+      'firstName' in model &&
+      'lastName' in model
+    );
   }
 
   validateInterface(model: unknown): model is IUser {

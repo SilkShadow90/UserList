@@ -1,7 +1,6 @@
 import { UserApi } from '../../api/UserApi';
 import { UserReducerType } from '../reducers/user';
 import { AppThunk } from '../index';
-import { delay } from '../../utils';
 import { User } from '../../models';
 
 const actionUserStartFetch = (id: number) => ({ type: UserReducerType['user/startFetch'], payload: { id } });
@@ -17,7 +16,6 @@ export const fetchUser =
   async (dispatch): Promise<void> => {
     dispatch(actionUserStartFetch(id));
 
-    await delay(1000);
     const user = await UserApi.getUser(id);
 
     if (user) {

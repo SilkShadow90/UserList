@@ -19,9 +19,7 @@ import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } fr
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
 
-const AnimatedView = React.memo(Animated.createAnimatedComponent(View), (prevProps, nextProps) => {
-  return prevProps.children === nextProps.children;
-});
+const AnimatedView = React.memo(Animated.createAnimatedComponent(View));
 
 export const HomeScreen = ({}: Props) => {
   const { users, isLoading, isError, pagination, isLoadingMore } = useAppSelector(state => state.usersState || {});
@@ -71,8 +69,8 @@ export const HomeScreen = ({}: Props) => {
   }, [startUploadUsers]);
 
   useEffect(() => {
-    if (userId === userData?.id && navigationRowRef) {
-      navigationRowRef.current?.handle();
+    if (userId === userData?.id && navigationRowRef.current) {
+      navigationRowRef.current.handle();
     }
   }, [userData?.id, userId]);
 

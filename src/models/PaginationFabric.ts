@@ -6,7 +6,14 @@ import { isObject } from '../utils';
 export class PaginationFabric extends BasicFabric<Pagination, IPagination> {
   private static instance?: PaginationFabric;
   validateModel(model: unknown): model is Pagination {
-    return isObject(model) && Object.keys(Pagination.prototype).every(property => model.hasOwnProperty(property));
+    return (
+      isObject(model) &&
+      'currentPage' in model &&
+      'totalPages' in model &&
+      'perPageItemsCount' in model &&
+      'totalItemsCount' in model &&
+      'isListEnd' in model
+    );
   }
 
   validateInterface(model: unknown): model is IPagination {

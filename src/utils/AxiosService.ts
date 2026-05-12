@@ -36,14 +36,12 @@ export class AxiosService {
     });
 
     AxiosService._instance.interceptors.response.use(
-      response => {
-        return response;
-      },
+      response => response,
       function (error) {
-        if (AxiosService.notFound(error.response.status)) {
+        if (error.response && AxiosService.notFound(error.response.status)) {
           throw new Error(Strings.errors.notFound);
         }
-        return Promise.reject(error.response);
+        return Promise.reject(error.response ?? error);
       },
     );
 
@@ -54,26 +52,22 @@ export class AxiosService {
     url: string,
     validateFunc?: (data: T | T[]) => boolean,
   ): Promise<AxiosResponse<Response<T>> | void> {
-    try {
-      const response = await AxiosService.instance.get<Response<T>>(url);
-      const isSuccess = AxiosService.isSuccess(response.status);
+    const response = await AxiosService.instance.get<Response<T>>(url);
+    const isSuccess = AxiosService.isSuccess(response.status);
 
-      if (isSuccess && (validateFunc ? validateFunc(response.data?.data) : true)) {
-        return response;
-      }
-
-      if (isSuccess && validateFunc) {
-        AxiosService.showError(Strings.errors.validateError);
-      }
-
-      AxiosService.showError(Strings.errors.someError);
-    } catch (error) {
-      throw error;
+    if (isSuccess && (validateFunc ? validateFunc(response.data?.data) : true)) {
+      return response;
     }
+
+    if (isSuccess && validateFunc) {
+      AxiosService.showError(Strings.errors.validateError);
+    }
+
+    AxiosService.showError(Strings.errors.someError);
   }
 
   private static isSuccess(status: number): boolean {
-    return status === 200;
+    return status >= 200 && status < 300;
   }
 
   private static notFound(status: number): boolean {
