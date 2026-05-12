@@ -1,4 +1,4 @@
-export abstract class BasicFabric<T, P> {
+export abstract class BasicFactory<T, P> {
   protected abstract validateInterface(object: unknown): object is P;
   protected abstract validateModel(model: unknown): model is T;
   protected abstract generateModel(model: P): T;

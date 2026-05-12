@@ -1,9 +1,9 @@
 import { IPagination, Pagination } from './Pagination';
-import { BasicFabric } from './BasicFabric';
+import { BasicFactory } from './BasicFactory';
 import { isObject } from '../utils';
 
-export class PaginationFabric extends BasicFabric<Pagination, IPagination> {
-  private static readonly instance = new PaginationFabric();
+export class PaginationFactory extends BasicFactory<Pagination, IPagination> {
+  private static readonly instance = new PaginationFactory();
 
   protected validateInterface(model: unknown): model is IPagination {
     return (
@@ -31,15 +31,15 @@ export class PaginationFabric extends BasicFabric<Pagination, IPagination> {
   }
 
   static create(data: unknown): Pagination | undefined {
-    const result = PaginationFabric.instance.create(data);
+    const result = PaginationFactory.instance.create(data);
     return Array.isArray(result) ? undefined : result;
   }
 
   static checkInterface(data: unknown): data is IPagination {
-    return !Array.isArray(data) && PaginationFabric.instance.checkInterface(data);
+    return !Array.isArray(data) && PaginationFactory.instance.checkInterface(data);
   }
 
   static checkModel(data: unknown): data is Pagination {
-    return !Array.isArray(data) && PaginationFabric.instance.checkModel(data);
+    return !Array.isArray(data) && PaginationFactory.instance.checkModel(data);
   }
 }

@@ -1,6 +1,6 @@
 import { AlertService, AxiosService } from '../utils';
-import { User, UserFabric } from '../models';
-import { PaginationFabric, Pagination } from '../models';
+import { User, UserFactory } from '../models';
+import { PaginationFactory, Pagination } from '../models';
 
 type UserList = {
   users: User[];
@@ -12,14 +12,14 @@ export class UserApi {
     const query = `/users?page=${page}`;
 
     try {
-      const response = await AxiosService.get<User>(query, UserFabric.checkInterface);
+      const response = await AxiosService.get<User>(query, UserFactory.checkInterface);
       if (!response) return;
 
       const rawData = response.data?.data;
       if (!Array.isArray(rawData)) return;
 
-      const users = UserFabric.create(rawData);
-      const pagination = PaginationFabric.create(response.data);
+      const users = UserFactory.create(rawData);
+      const pagination = PaginationFactory.create(response.data);
 
       if (users && pagination) {
         return { users, pagination };
@@ -33,11 +33,11 @@ export class UserApi {
     const query = `/users/${id}`;
 
     try {
-      const response = await AxiosService.get<User>(query, UserFabric.checkInterface);
+      const response = await AxiosService.get<User>(query, UserFactory.checkInterface);
       if (!response) return;
 
       const rawData = response.data?.data;
-      return Array.isArray(rawData) ? undefined : UserFabric.create(rawData);
+      return Array.isArray(rawData) ? undefined : UserFactory.create(rawData);
     } catch (error) {
       await AlertService.showAlert({ title: (error as Error).message });
     }

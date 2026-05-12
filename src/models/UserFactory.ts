@@ -1,9 +1,9 @@
 import { IUser, User } from './User';
-import { BasicFabric } from './BasicFabric';
+import { BasicFactory } from './BasicFactory';
 import { isObject } from '../utils';
 
-export class UserFabric extends BasicFabric<User, IUser> {
-  private static readonly instance = new UserFabric();
+export class UserFactory extends BasicFactory<User, IUser> {
+  private static readonly instance = new UserFactory();
 
   protected validateInterface(model: unknown): model is IUser {
     return (
@@ -30,16 +30,16 @@ export class UserFabric extends BasicFabric<User, IUser> {
   static create(data: unknown[]): User[] | undefined;
   static create(data: unknown): User | undefined;
   static create(data: unknown): User | User[] | undefined {
-    return UserFabric.instance.create(data);
+    return UserFactory.instance.create(data);
   }
 
   static checkInterface(data: unknown): data is IUser | IUser[] {
-    return UserFabric.instance.checkInterface(data);
+    return UserFactory.instance.checkInterface(data);
   }
 
   static checkModel(data: unknown[]): data is User[];
   static checkModel(data: unknown): data is User;
   static checkModel(data: unknown): data is User | User[] {
-    return UserFabric.instance.checkModel(data);
+    return UserFactory.instance.checkModel(data);
   }
 }
