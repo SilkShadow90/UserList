@@ -27,7 +27,7 @@ export const HomeScreen = ({}: Props) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
 
-  const navigationRowRef = useRef<NavigationRowRef>();
+  const navigationRowRef = useRef<NavigationRowRef | null>(null);
 
   const activeScale = useSharedValue(1);
   const scale = useSharedValue(1);
@@ -74,10 +74,6 @@ export const HomeScreen = ({}: Props) => {
     }
   }, [userData?.id, userId]);
 
-  const onRefresh = useCallback(() => {
-    startUploadUsers();
-  }, [startUploadUsers]);
-
   const getUser = useCallback(
     (id: number) => () => {
       scale.value = withSpring(0.95);
@@ -109,7 +105,7 @@ export const HomeScreen = ({}: Props) => {
     <View style={theme.wrapper} pointerEvents={isUserLoading ? 'none' : 'auto'}>
       <FlatList
         ListEmptyComponent={!isLoading ? <EmptyWrapper /> : null}
-        refreshControl={<RefreshControl refreshing={!!users?.length && !!isLoading} onRefresh={onRefresh} />}
+        refreshControl={<RefreshControl refreshing={!!users?.length && !!isLoading} onRefresh={startUploadUsers} />}
         style={styles.wrapper}
         contentContainerStyle={styles.intent}
         data={users}

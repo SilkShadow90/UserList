@@ -19,6 +19,6 @@ export class Pagination {
     this.perPageItemsCount = model.per_page;
     this.totalItemsCount = model.total;
     this.currentItemsCount = model.per_page * model.page;
-    this.isListEnd = model.page === model.total_pages;
+    this.isListEnd = model.page >= model.total_pages;
   }
 }

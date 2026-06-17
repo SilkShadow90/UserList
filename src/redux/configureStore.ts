@@ -3,11 +3,10 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { rootReducer } from './reducers/root';
-import { AppState } from '../types';
 
 type RootState = ReturnType<typeof rootReducer>;
 
-export function configureStore(preloadedState: RootState | AppState) {
+export function configureStore(preloadedState: RootState) {
   const middlewares = [thunkMiddleware];
   const middlewareEnhancer = applyMiddleware(...middlewares);
 

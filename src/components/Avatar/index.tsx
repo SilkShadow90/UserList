@@ -21,12 +21,14 @@ export const Avatar = ({ imageUrl, size, text }: Props) => {
   const [isValidImage, setValidImage] = useState<boolean>(false);
 
   useEffect(() => {
-    if (imageUrl) {
-      (async () => {
-        const isValid = await Image.prefetch(imageUrl);
-        setValidImage(isValid);
-      })();
-    }
+    if (!imageUrl) return;
+    let cancelled = false;
+    Image.prefetch(imageUrl).then(isValid => {
+      if (!cancelled) setValidImage(isValid);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [imageUrl]);
 
   return (
@@ -35,9 +37,7 @@ export const Avatar = ({ imageUrl, size, text }: Props) => {
       style={[theme.shadow, theme.placeholderBackground, theme.border, styles.avatarWrapper]}
     >
       {imageUrl && isValidImage ? (
-        <AnimatedView entering={FadeIn.duration(Config.animationMSStep * 2)}>
-          <Image source={{ uri: imageUrl }} style={[theme.placeholderBackground, styles.avatar]} />
-        </AnimatedView>
+        <Image source={{ uri: imageUrl }} style={[theme.placeholderBackground, styles.avatar]} />
       ) : (
         <Text style={[theme.text, styles.notAvatarText]}>{getAbbreviation(text)}</Text>
       )}

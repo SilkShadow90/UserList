@@ -3,7 +3,7 @@
  * @description хук для получения основных стилей приложения и реакции на смену темы
  */
 
-import { Platform, StyleSheet, useColorScheme } from 'react-native';
+import { Platform, StatusBar, StyleSheet, useColorScheme } from 'react-native';
 import { useMemo } from 'react';
 import { Colors, ColorSchemes } from '../resources';
 
@@ -15,7 +15,7 @@ export const useTheme = () => {
       ({
         wrapper: {
           flex: 1,
-          marginTop: Platform.OS === 'ios' ? 0 : 56,
+          marginTop: Platform.OS === 'ios' ? 0 : (StatusBar.currentHeight ?? 0),
           overflow: 'visible',
         },
         centeredWrapper: {

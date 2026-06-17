@@ -1,10 +1,3 @@
-/**
- * @name AxiosService
- * @description сервис выполнения запросов
- * @static метод get отправляет get запрос и проверяет полученные данные
- * @example AxiosService.get('url', validateFunction)
- */
-
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { Strings, Config } from '../resources';
 import { IPagination } from '../models';
@@ -51,19 +44,18 @@ export class AxiosService {
   public static async get<T>(
     url: string,
     validateFunc?: (data: T | T[]) => boolean,
-  ): Promise<AxiosResponse<Response<T>> | void> {
+  ): Promise<AxiosResponse<Response<T>>> {
     const response = await AxiosService.instance.get<Response<T>>(url);
-    const isSuccess = AxiosService.isSuccess(response.status);
 
-    if (isSuccess && (validateFunc ? validateFunc(response.data?.data) : true)) {
-      return response;
+    if (!AxiosService.isSuccess(response.status)) {
+      AxiosService.showError(Strings.errors.someError);
     }
 
-    if (isSuccess && validateFunc) {
+    if (validateFunc && !validateFunc(response.data?.data)) {
       AxiosService.showError(Strings.errors.validateError);
     }
 
-    AxiosService.showError(Strings.errors.someError);
+    return response;
   }
 
   private static isSuccess(status: number): boolean {
@@ -74,7 +66,7 @@ export class AxiosService {
     return status === 404;
   }
 
-  private static showError(text?: string): void {
+  private static showError(text?: string): never {
     throw new Error(text ?? Strings.errors.someError);
   }
 }

@@ -24,6 +24,7 @@ const darkColors: Partial<ColorSet> = {
   placeholder: '#f3f3f340',
   placeholderBackground: '#b2b2b212',
   accent: '#0a78ffcc',
+  link: '#5ba8c9',
 } as const;
 
 export const Colors: Record<ColorSchemes, Partial<ColorSet>> = {

@@ -13,7 +13,6 @@ export class UserApi {
 
     try {
       const response = await AxiosService.get<User>(query, UserFactory.checkInterface);
-      if (!response) return;
 
       const rawData = response.data?.data;
       if (!Array.isArray(rawData)) return;
@@ -34,7 +33,6 @@ export class UserApi {
 
     try {
       const response = await AxiosService.get<User>(query, UserFactory.checkInterface);
-      if (!response) return;
 
       const rawData = response.data?.data;
       return Array.isArray(rawData) ? undefined : UserFactory.create(rawData);
