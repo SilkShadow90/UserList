@@ -17,13 +17,13 @@ export type AlertParams = {
 };
 
 export class AlertService {
-  private static nextId = 0;
+  private static _nextId = 0;
   private static alertMap: Map<number, AlertParams> = new Map();
 
-  private static get nextID(): number {
-    AlertService.nextId = AlertService.nextId + 1;
+  private static get nextId(): number {
+    AlertService._nextId = AlertService._nextId + 1;
 
-    return AlertService.nextId;
+    return AlertService._nextId;
   }
 
   private static async showNext(): Promise<void> {
@@ -58,7 +58,7 @@ export class AlertService {
   public static async showAlert(params: AlertParams): Promise<void> {
     const isEmpty = AlertService.isEmptyStack;
 
-    const id = AlertService.nextID;
+    const id = AlertService.nextId;
     AlertService.alertMap.set(id, {
       ...params,
       buttons: [...(params?.buttons || []), AlertService.getContinueButton(id)],

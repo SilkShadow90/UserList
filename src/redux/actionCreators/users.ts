@@ -1,29 +1,27 @@
 import { UserApi } from '../../api/UserApi';
 import { UsersReducerType } from '../reducers/users';
 import { AppThunk } from '../index';
-import { delay } from '../../utils';
 import { Pagination, User } from '../../models';
 
-const actionUsersStartFetch = { type: UsersReducerType['users/startFetch'], payload: {} };
+const actionUsersStartFetch = { type: UsersReducerType.startFetch };
 const actionUsersCompletedFetch = (users: User[], pagination: Pagination) => ({
-  type: UsersReducerType['users/completedFetch'],
+  type: UsersReducerType.completedFetch,
   payload: { users, pagination },
 });
-const actionUsersErrorFetch = { type: UsersReducerType['users/errorFetch'], payload: {} };
+const actionUsersErrorFetch = { type: UsersReducerType.errorFetch };
 
-const actionUsersStartMoreFetch = { type: UsersReducerType['users/startMoreFetch'], payload: {} };
+const actionUsersStartMoreFetch = { type: UsersReducerType.startMoreFetch };
 const actionUsersCompletedMoreFetch = (users: User[], pagination: Pagination) => ({
-  type: UsersReducerType['users/completedMoreFetch'],
+  type: UsersReducerType.completedMoreFetch,
   payload: { users, pagination },
 });
-const actionUsersErrorMoreFetch = { type: UsersReducerType['users/errorMoreFetch'], payload: {} };
+const actionUsersErrorMoreFetch = { type: UsersReducerType.errorMoreFetch };
 
 export const fetchUsers =
   (): AppThunk =>
   async (dispatch): Promise<void> => {
     dispatch(actionUsersStartFetch);
 
-    await delay(1000);
     const { users = [], pagination } = (await UserApi.getUsers()) || {};
 
     if (Array.isArray(users) && pagination) {

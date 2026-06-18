@@ -10,7 +10,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { Config, Strings } from '../../resources';
 import { mailTo } from '../../utils';
 import { Avatar, ErrorWrapper } from '../../components';
-import { UserFabric } from '../../models';
+import { UserFactory } from '../../models';
 import { styles } from './index.styles';
 import { useTheme } from '../../hooks/useTheme';
 
@@ -27,7 +27,7 @@ export const DetailsScreen = () => {
     }
   }, [user]);
 
-  if (!UserFabric.checkModel(user)) {
+  if (!UserFactory.checkModel(user)) {
     return <ErrorWrapper />;
   }
 

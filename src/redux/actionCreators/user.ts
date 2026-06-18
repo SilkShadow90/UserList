@@ -1,23 +1,21 @@
 import { UserApi } from '../../api/UserApi';
 import { UserReducerType } from '../reducers/user';
 import { AppThunk } from '../index';
-import { delay } from '../../utils';
 import { User } from '../../models';
 
-const actionUserStartFetch = (id: number) => ({ type: UserReducerType['user/startFetch'], payload: { id } });
+const actionUserStartFetch = (id: number) => ({ type: UserReducerType.startFetch, payload: { id } });
 const actionUserCompletedFetch = (user: User) => ({
-  type: UserReducerType['user/completedFetch'],
+  type: UserReducerType.completedFetch,
   payload: { user },
 });
-const actionUserClearCompleted = { type: UserReducerType['user/clearCompleted'], payload: {} };
-const actionUserErrorFetch = { type: UserReducerType['user/errorFetch'], payload: {} };
+const actionUserClearCompleted = { type: UserReducerType.clearCompleted };
+const actionUserErrorFetch = { type: UserReducerType.errorFetch };
 
 export const fetchUser =
   (id: number): AppThunk =>
   async (dispatch): Promise<void> => {
     dispatch(actionUserStartFetch(id));
 
-    await delay(1000);
     const user = await UserApi.getUser(id);
 
     if (user) {

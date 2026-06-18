@@ -17,7 +17,7 @@ export const ErrorWrapper = ({ retry }: Props) => {
       <Text style={[styles.errorText, theme.title]}>{Strings.errors.someError}</Text>
       {!!retry && (
         <View style={styles.buttonWrapper}>
-          <Button title={Strings.global.retry} opPress={retry} />
+          <Button title={Strings.global.retry} onPress={retry} />
         </View>
       )}
     </View>

@@ -5,14 +5,14 @@ import { useTheme } from '../../hooks/useTheme';
 
 type Props = {
   title: string;
-  opPress(): void;
+  onPress(): void;
 };
 
-export const Button = ({ title, opPress }: Props) => {
+export const Button = ({ title, onPress }: Props) => {
   const theme = useTheme();
 
   return (
-    <TouchableOpacity onPress={opPress} style={[theme.buttonColor, theme.shadow, styles.wrapper]}>
+    <TouchableOpacity onPress={onPress} style={[theme.buttonColor, theme.shadow, styles.wrapper]}>
       <Text style={theme.text}>{title}</Text>
     </TouchableOpacity>
   );

@@ -19,9 +19,7 @@ import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, withSpring } fr
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationScreens.Home>;
 
-const AnimatedView = React.memo(Animated.createAnimatedComponent(View), (prevProps, nextProps) => {
-  return prevProps.children === nextProps.children;
-});
+const AnimatedView = React.memo(Animated.createAnimatedComponent(View));
 
 export const HomeScreen = ({}: Props) => {
   const { users, isLoading, isError, pagination, isLoadingMore } = useAppSelector(state => state.usersState || {});
@@ -29,7 +27,7 @@ export const HomeScreen = ({}: Props) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
 
-  const navigationRowRef = useRef<NavigationRowRef>();
+  const navigationRowRef = useRef<NavigationRowRef | null>(null);
 
   const activeScale = useSharedValue(1);
   const scale = useSharedValue(1);
@@ -71,14 +69,10 @@ export const HomeScreen = ({}: Props) => {
   }, [startUploadUsers]);
 
   useEffect(() => {
-    if (userId === userData?.id && navigationRowRef) {
-      navigationRowRef.current?.handle();
+    if (userId === userData?.id && navigationRowRef.current) {
+      navigationRowRef.current.handle();
     }
   }, [userData?.id, userId]);
-
-  const onRefresh = useCallback(() => {
-    startUploadUsers();
-  }, [startUploadUsers]);
 
   const getUser = useCallback(
     (id: number) => () => {
@@ -111,7 +105,7 @@ export const HomeScreen = ({}: Props) => {
     <View style={theme.wrapper} pointerEvents={isUserLoading ? 'none' : 'auto'}>
       <FlatList
         ListEmptyComponent={!isLoading ? <EmptyWrapper /> : null}
-        refreshControl={<RefreshControl refreshing={!!users?.length && !!isLoading} onRefresh={onRefresh} />}
+        refreshControl={<RefreshControl refreshing={!!users?.length && !!isLoading} onRefresh={startUploadUsers} />}
         style={styles.wrapper}
         contentContainerStyle={styles.intent}
         data={users}

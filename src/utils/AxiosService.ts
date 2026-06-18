@@ -1,10 +1,3 @@
-/**
- * @name AxiosService
- * @description сервис выполнения запросов
- * @static метод get отправляет get запрос и проверяет полученные данные
- * @example AxiosService.get('url', validateFunction)
- */
-
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { Strings, Config } from '../resources';
 import { IPagination } from '../models';
@@ -36,14 +29,12 @@ export class AxiosService {
     });
 
     AxiosService._instance.interceptors.response.use(
-      response => {
-        return response;
-      },
+      response => response,
       function (error) {
-        if (AxiosService.notFound(error.response.status)) {
+        if (error.response && AxiosService.notFound(error.response.status)) {
           throw new Error(Strings.errors.notFound);
         }
-        return Promise.reject(error.response);
+        return Promise.reject(error.response ?? error);
       },
     );
 
@@ -53,34 +44,29 @@ export class AxiosService {
   public static async get<T>(
     url: string,
     validateFunc?: (data: T | T[]) => boolean,
-  ): Promise<AxiosResponse<Response<T>> | void> {
-    try {
-      const response = await AxiosService.instance.get<Response<T>>(url);
-      const isSuccess = AxiosService.isSuccess(response.status);
+  ): Promise<AxiosResponse<Response<T>>> {
+    const response = await AxiosService.instance.get<Response<T>>(url);
 
-      if (isSuccess && (validateFunc ? validateFunc(response.data?.data) : true)) {
-        return response;
-      }
-
-      if (isSuccess && validateFunc) {
-        AxiosService.showError(Strings.errors.validateError);
-      }
-
+    if (!AxiosService.isSuccess(response.status)) {
       AxiosService.showError(Strings.errors.someError);
-    } catch (error) {
-      throw error;
     }
+
+    if (validateFunc && !validateFunc(response.data?.data)) {
+      AxiosService.showError(Strings.errors.validateError);
+    }
+
+    return response;
   }
 
   private static isSuccess(status: number): boolean {
-    return status === 200;
+    return status >= 200 && status < 300;
   }
 
   private static notFound(status: number): boolean {
     return status === 404;
   }
 
-  private static showError(text?: string): void {
+  private static showError(text?: string): never {
     throw new Error(text ?? Strings.errors.someError);
   }
 }

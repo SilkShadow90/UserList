@@ -18,7 +18,7 @@ export type NavigationRowRef = {
   handle(): void;
 };
 
-const renderNavigationRow = forwardRef<NavigationRowRef, Props>(
+const NavigationRowInner = forwardRef<NavigationRowRef, Props>(
   ({ text, navigateScreen, isLoading, onPress }: Props, ref) => {
     const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
     const theme = useTheme();
@@ -58,4 +58,4 @@ const renderNavigationRow = forwardRef<NavigationRowRef, Props>(
   },
 );
 
-export const NavigationRow = React.memo(renderNavigationRow);
+export const NavigationRow = React.memo(NavigationRowInner);
